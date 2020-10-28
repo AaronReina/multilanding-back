@@ -1,13 +1,13 @@
-import {TypeOrmModuleOptions} from '@nestjs/typeorm'
 
-export const typeOrmConfig: TypeOrmModuleOptions = 
-    {
+
+export const typeOrmConfig = () =>
+   ({database: {
         "type": "mysql",
         "host": "localhost",
         "port": 3306,
-        "username": "root",
-        "password": "dasd",
-        "database": "test",
+        "username": process.env.DATABASE_USER,
+        "password": process.env.DATABASE_PASSWORD,
+        "database": process.env.DATABASE_NAME,
         "entities": ["dist/**/*.entity{.ts,.js}"],
         "synchronize": true
-      }
+      }})
