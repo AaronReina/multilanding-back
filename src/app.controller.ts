@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { AppService } from './app.service';
 import { Users } from './entities/users.entity';
 import { Text } from './entities/text.entity';
@@ -20,8 +28,9 @@ export class AppController {
   }
 
   @Post('changeImage')
-  changeImage(@Body() image: Images): Promise<unknown> {
-    return this.appService.changeImage(image);
+  @UseInterceptors(FileInterceptor('file'))
+  changeImage(@UploadedFile() file, @Body() data: unknown) {
+    return this.appService.changeImage(data, file);
   }
 
   @Post('changeColors')
@@ -34,7 +43,7 @@ export class AppController {
     return this.appService.getColors();
   }
   @Get('images')
-  getImages(): Promise<any[]> {
+  getImages(): Promise<unknown> {
     return this.appService.getImages();
   }
   @Get('text')

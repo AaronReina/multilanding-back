@@ -6,9 +6,8 @@ export class Images extends BaseEntity {
   id: number;
 
   @Column()
-  info: string
+  info: string;
 
-  @Column({ type: "blob" })
-  image
+  @Column({ type: 'blob', nullable: true })
+  image: unknown;
 }
-

@@ -48,18 +48,20 @@ export class AppService {
     throw new UnauthorizedException();
   }
 
-  async changeImage(images: Images): Promise<unknown> {
-    const { id, info, image } = images;
-    if (!id || !info || !image) {
-      throw new BadRequestException();
-    }
+  async changeImage(data, file): Promise<unknown> {
+    const { id, fileName } = data;
+    const baseImage = Buffer.from(file.buffer).toString('base64');
+    console.log(baseImage);
+    const updateInfo = {
+      info: fileName,
+      image: baseImage,
+    };
     try {
-      await this.imagesRepository.update(id, images);
-      return { ok: true };
+      const response = await this.imagesRepository.update(id + 1, updateInfo);
+      return response;
     } catch {
       throw new InternalServerErrorException();
     }
-    // await this.imagesRepository.save(images)
   }
 
   async changeColors(colors: Colors): Promise<unknown> {
@@ -109,6 +111,9 @@ export class AppService {
   async getImages(): Promise<any[]> {
     try {
       const selection = await this.imagesRepository.find();
+      if (selection) {
+        selection.forEach(e => (e.image = e.image.toString()));
+      }
       return selection;
     } catch {
       throw new InternalServerErrorException();

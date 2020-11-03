@@ -5,6 +5,9 @@ export class Text extends BaseEntity {
   @PrimaryColumn()
   id: number;
 
-  @Column()
-  htmlText: string
+  @Column({
+    type: 'text',
+    nullable: false,
+  })
+  htmlText: string;
 }
