@@ -51,13 +51,12 @@ export class AppService {
   async changeImage(data, file): Promise<unknown> {
     const { id, fileName } = data;
     const baseImage = Buffer.from(file.buffer).toString('base64');
-    console.log(baseImage);
     const updateInfo = {
       info: fileName,
       image: baseImage,
     };
     try {
-      const response = await this.imagesRepository.update(id + 1, updateInfo);
+      const response = await this.imagesRepository.update(id, updateInfo);
       return response;
     } catch {
       throw new InternalServerErrorException();
@@ -112,7 +111,11 @@ export class AppService {
     try {
       const selection = await this.imagesRepository.find();
       if (selection) {
-        selection.forEach(e => (e.image = e.image.toString()));
+        selection.forEach(e => {
+          if (e.image) {
+            e.image = e.image.toString();
+          }
+        });
       }
       return selection;
     } catch {
