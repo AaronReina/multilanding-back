@@ -10,6 +10,7 @@ import { Users } from './entities/users.entity';
 import { Images } from './entities/images.entity';
 import { Text } from './entities/text.entity';
 import { Colors } from './entities/colors.entity';
+import { Config } from './entities/config.entity';
 
 import * as bcrypt from 'bcrypt';
 
@@ -27,6 +28,9 @@ export class AppService {
 
     @InjectRepository(Text)
     private textRepository: Repository<Text>,
+
+    @InjectRepository(Config)
+    private configRepository: Repository<Config>,
   ) {}
 
   async login(users: Users): Promise<unknown> {
@@ -38,6 +42,7 @@ export class AppService {
       where: { username: username },
     });
     if (userSelected) {
+      console.log(await bcrypt.hash(password, 10));
       const accessOk = await bcrypt.compare(password, userSelected.password);
       if (accessOk) {
         return { access: userSelected.access, ok: true };
@@ -84,6 +89,29 @@ export class AppService {
     try {
       await this.textRepository.update(id, text);
       return { ok: true };
+    } catch {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async changeConfig(config: Config): Promise<unknown> {
+    console.log(config);
+    return console.log(config);
+    // if (!id || !htmlText) {
+    //   throw new BadRequestException();
+    // }
+    // try {
+    //   await this.textRepository.update(id, text);
+    //   return { ok: true };
+    // } catch {
+    //   throw new InternalServerErrorException();
+    // }
+  }
+
+  async getConfig(): Promise<any[]> {
+    try {
+      const selection = await this.configRepository.find();
+      return selection;
     } catch {
       throw new InternalServerErrorException();
     }

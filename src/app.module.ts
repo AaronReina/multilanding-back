@@ -9,14 +9,16 @@ import { Users } from './entities/users.entity';
 import { Images } from './entities/images.entity';
 import { Colors } from './entities/colors.entity';
 import { Text } from './entities/text.entity';
+import { Config } from './entities/config.entity';
 
 @Module({
   imports: [
-
-    ConfigModule.forRoot({isGlobal:true, load:[typeOrmConfig]}),
-    TypeOrmModule.forRootAsync({useClass:DataBaseConfig, imports:[ConfigModule]}),
-    TypeOrmModule.forFeature([Users, Text, Images, Colors])
-
+    ConfigModule.forRoot({ isGlobal: true, load: [typeOrmConfig] }),
+    TypeOrmModule.forRootAsync({
+      useClass: DataBaseConfig,
+      imports: [ConfigModule],
+    }),
+    TypeOrmModule.forFeature([Users, Text, Images, Colors, Config]),
   ],
   controllers: [AppController],
   providers: [AppService],

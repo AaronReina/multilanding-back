@@ -10,7 +10,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { AppService } from './app.service';
 import { Users } from './entities/users.entity';
 import { Text } from './entities/text.entity';
-import { Images } from './entities/images.entity';
+import { Config } from './entities/config.entity';
 import { Colors } from './entities/colors.entity';
 
 @Controller()
@@ -25,6 +25,11 @@ export class AppController {
   @Post('changeText')
   changeText(@Body() text: Text): Promise<unknown> {
     return this.appService.changeText(text);
+  }
+
+  @Post('changeConfig')
+  changeConfig(@Body() config: Config): Promise<unknown> {
+    return this.appService.changeConfig(config);
   }
 
   @Post('changeImage')
@@ -42,6 +47,12 @@ export class AppController {
   getColors(): Promise<any[]> {
     return this.appService.getColors();
   }
+
+  @Get('config')
+  getConfig(): Promise<any[]> {
+    return this.appService.getConfig();
+  }
+
   @Get('images')
   getImages(): Promise<unknown> {
     return this.appService.getImages();
