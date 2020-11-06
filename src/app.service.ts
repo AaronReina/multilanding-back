@@ -95,17 +95,15 @@ export class AppService {
   }
 
   async changeConfig(config: Config): Promise<unknown> {
-    console.log(config);
-    return console.log(config);
-    // if (!id || !htmlText) {
-    //   throw new BadRequestException();
-    // }
-    // try {
-    //   await this.textRepository.update(id, text);
-    //   return { ok: true };
-    // } catch {
-    //   throw new InternalServerErrorException();
-    // }
+    if (!config) {
+      throw new BadRequestException();
+    }
+    try {
+      await this.configRepository.update(1, config);
+      return { ok: true };
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
   async getConfig(): Promise<any[]> {
