@@ -7,7 +7,7 @@ export class Text extends BaseEntity {
 
   @Column({
     type: 'text',
-    nullable: false,
+    nullable: true,
   })
   htmlText: string;
 }
