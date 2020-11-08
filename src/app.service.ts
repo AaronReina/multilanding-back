@@ -42,7 +42,6 @@ export class AppService {
       where: { username: username },
     });
     if (userSelected) {
-      console.log(await bcrypt.hash(password, 10));
       const accessOk = await bcrypt.compare(password, userSelected.password);
       if (accessOk) {
         return { access: userSelected.access, ok: true };

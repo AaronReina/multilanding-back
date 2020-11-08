@@ -8,6 +8,6 @@ export class Images extends BaseEntity {
   @Column()
   info: string;
 
-  @Column({ type: 'blob', nullable: true })
+  @Column({ type: 'longblob', nullable: true })
   image: unknown;
 }
