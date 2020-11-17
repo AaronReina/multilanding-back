@@ -1,7 +1,7 @@
 export const typeOrmConfig = () => ({
   database: {
-    type: 'mysql',
-    host: 'localhost',
+    type: 'mariadb',
+    host: 'mariadb',
     port: 3306,
     username: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
